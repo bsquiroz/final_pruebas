@@ -12,6 +12,7 @@ import {
 interface PropsSelectCustom {
   label: string;
   placeholder: string;
+  value?: string;
   options: {
     text: string;
     value: string;
@@ -26,7 +27,10 @@ const emits = defineEmits<{
 
 <template>
   <div class="grid w-full max-w-sm items-center gap-1.5">
-    <Select @update:model-value="(value) => emits('update:model-value', value)">
+    <Select
+      :modelValue="value"
+      @update:model-value="(value) => emits('update:model-value', value)"
+    >
       <SelectTrigger>
         <SelectValue :placeholder="placeholder" />
       </SelectTrigger>

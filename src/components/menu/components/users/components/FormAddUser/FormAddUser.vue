@@ -67,8 +67,9 @@ const handleAddUser = () => {
         />
         <SelectControl
           label="Seleccione una ciudad"
-          placeholder="Medellin"
-          v-model="user.destination"
+          placeholder="Ej: Ciudad del cabo"
+          v-model:model-value="user.destination"
+          :value="user.destination"
           :options="optionsPlaces"
         />
         <Button @click="handleAddUser">Crear usuario</Button>
