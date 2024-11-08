@@ -52,13 +52,17 @@ const handleAddUser = () => {
           label="Ingrese el nombre del usuario"
           placeholder="ej: Sofia castro"
           type="text"
+          :regex-pattern="/^[a-zA-Z]$/"
+          :max-length="30"
           v-model="user.name"
         />
         <InputControl
           id="cc_user"
           label="Ingrese el cc del usuario"
           placeholder="ej: 12345"
-          type="number"
+          type="text"
+          :regex-pattern="/^[0-9]$/"
+          :max-length="10"
           v-model="user.cc"
         />
         <SelectControl

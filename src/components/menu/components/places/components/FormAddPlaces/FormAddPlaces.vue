@@ -41,6 +41,8 @@ const handleAddPlace = () => {
           label="Ingrese el nombre de la ciudad"
           placeholder="ej: El fener"
           type="text"
+          :regex-pattern="/^[a-zA-Z]$/"
+          :max-length="30"
           v-model="place.city"
         />
         <InputControl
@@ -48,6 +50,8 @@ const handleAddPlace = () => {
           label="A que pais pertenece la ciudad?"
           placeholder="ej: Andorra"
           type="text"
+          :regex-pattern="/^[a-zA-Z]$/"
+          :max-length="30"
           v-model="place.country"
         />
         <Button @click="handleAddPlace">Crear destino</Button>
