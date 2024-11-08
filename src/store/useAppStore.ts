@@ -2,12 +2,19 @@ import { defineStore } from "pinia";
 import { reactive, ref, watch } from "vue";
 import { toast } from "vue-sonner";
 
+interface Place {
+  city?: string;
+  country?: string;
+}
+
+interface User {
+  cc: number;
+  destination: string;
+  name: string;
+}
+
 interface Search {
-  user?: {
-    cc: number;
-    destination: string;
-    name: string;
-  };
+  user?: User;
   places?: {
     cc: number;
     city: string;
@@ -231,6 +238,15 @@ export const useAppStore = defineStore("counter", () => {
     valuesInputs.userCCCity = 0;
     valuesInputs.userCCCountry = 0;
   };
+
+  const addPlace = (place: Required<Place>) => {
+    places.push(place);
+  };
+
+  const addUser = (user: User) => {
+    users.push(user);
+  };
+
   watch(optionRequest, handleResetValues);
 
   return {
@@ -242,5 +258,7 @@ export const useAppStore = defineStore("counter", () => {
     handleOptionsRequest,
     handleOptionsButtons,
     handleResetValues,
+    addPlace,
+    addUser,
   };
 });

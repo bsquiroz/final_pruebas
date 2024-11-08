@@ -16,9 +16,9 @@ const handleRequestUser = (opcion: number) => {
       "Debes de ingresra la CC para buscar la pais a donde va"
     );
   if (opcion === 3 && !store.valuesInputs.userAmountCountry)
-    return toast.error("Debes de ingresar la pais");
+    return toast.error("Debes de ingresar el pais, para continuar");
   if (opcion === 4 && !store.valuesInputs.userAmountCity)
-    return toast.error("Debes de ingresar el ciudad");
+    return toast.error("Debes de ingresar el ciudad, para continuar");
 
   store.handleOptionsRequest(opcion);
 };

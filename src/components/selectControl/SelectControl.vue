@@ -33,6 +33,7 @@ const emits = defineEmits<{
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{{ label }}</SelectLabel>
+
           <SelectItem v-for="option in options" :value="option.value">{{
             option.text
           }}</SelectItem>

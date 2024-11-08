@@ -10,6 +10,7 @@ import { computed, reactive } from "vue";
 import Button from "@/components/ui/button/Button.vue";
 import SelectControl from "@/components/selectControl/SelectControl.vue";
 import { useAppStore } from "@/store/useAppStore";
+import { toast } from "vue-sonner";
 
 interface User {
   name?: string;
@@ -17,15 +18,28 @@ interface User {
   destination?: string;
 }
 
-const user = reactive<User>({});
-
 const store = useAppStore();
+
+const user = reactive<User>({});
 const optionsPlaces = computed(() =>
   store.places.map((place) => ({
     text: place.city,
     value: place.city,
   }))
 );
+
+const handleAddUser = () => {
+  if (!user.name) return toast.error("El nombre es necesario, Ingresalo");
+  if (!user.cc) return toast.error("El CC es necesario, Ingresalo");
+  if (!user.destination)
+    return toast.error("El destino es necesario, Ingresalo");
+
+  store.addUser({ ...user } as Required<User>);
+
+  user.cc = undefined;
+  user.destination = undefined;
+  user.name = undefined;
+};
 </script>
 
 <template>
@@ -53,7 +67,7 @@ const optionsPlaces = computed(() =>
           v-model="user.destination"
           :options="optionsPlaces"
         />
-        <Button>Crear usuario</Button>
+        <Button @click="handleAddUser">Crear usuario</Button>
       </AccordionContent>
     </AccordionItem>
   </Accordion>
