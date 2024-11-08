@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import { reactive } from "vue";
 import Button from "@/components/ui/button/Button.vue";
-import { useAppStore } from "@/store/useAppStore";
 
 interface Place {
   city?: string;
@@ -16,8 +15,6 @@ interface Place {
 }
 
 const place = reactive<Place>({});
-
-const store = useAppStore();
 </script>
 
 <template>
