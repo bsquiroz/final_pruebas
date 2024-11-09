@@ -21,10 +21,20 @@ const store = useAppStore();
 const place = reactive<Place>({});
 
 const handleAddPlace = () => {
-  if (!place.city) return toast.error("La ciudad es necesaria, ingresala");
-  if (!place.country) return toast.error("El pais es necesario, ingresalo");
+  const city = place.city?.trim().toLowerCase();
+  const country = place.country?.trim().toLowerCase();
 
-  store.addPlace({ ...place } as Required<Place>);
+  if (!city) return toast.error("La ciudad es necesaria, ingresala");
+  if (!country) return toast.error("El pais es necesario, ingresalo");
+
+  const placeFoundinStorage = store.places.find((place) => place.city === city);
+
+  if (placeFoundinStorage?.country === country)
+    return toast.error(
+      `La ciudad ${place.city} con el pais ${place.country} Ya existen`
+    );
+
+  store.addPlace({ city, country } as Required<Place>);
 
   place.city = undefined;
   place.country = undefined;
@@ -41,7 +51,7 @@ const handleAddPlace = () => {
           label="Ingrese el nombre de la ciudad"
           placeholder="ej: El fener"
           type="text"
-          :regex-pattern="/^[a-zA-Z]$/"
+          :regex-pattern="/^[a-zA-Z ]*$/"
           :max-length="30"
           v-model="place.city"
         />
@@ -50,7 +60,7 @@ const handleAddPlace = () => {
           label="A que pais pertenece la ciudad?"
           placeholder="ej: Andorra"
           type="text"
-          :regex-pattern="/^[a-zA-Z]$/"
+          :regex-pattern="/^[a-zA-Z ]*$/"
           :max-length="30"
           v-model="place.country"
         />

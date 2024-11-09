@@ -29,12 +29,18 @@ const optionsPlaces = computed(() =>
 );
 
 const handleAddUser = () => {
-  if (!user.name) return toast.error("El nombre es necesario, Ingresalo");
+  const userName = user.name?.trim().toLowerCase();
+  if (!userName) return toast.error("El nombre es necesario, Ingresalo");
   if (!user.cc) return toast.error("El CC es necesario, Ingresalo");
   if (!user.destination)
     return toast.error("El destino es necesario, Ingresalo");
 
-  store.addUser({ ...user } as Required<User>);
+  const findUserByCC = store.users.find((data) => data.cc === +user.cc!);
+
+  if (findUserByCC)
+    return toast.error("Ya hay un usuario con este ID, verifica");
+
+  store.addUser({ ...user, name: userName } as Required<User>);
 
   user.cc = undefined;
   user.destination = undefined;
@@ -52,7 +58,7 @@ const handleAddUser = () => {
           label="Ingrese el nombre del usuario"
           placeholder="ej: Sofia castro"
           type="text"
-          :regex-pattern="/^[a-zA-Z]$/"
+          :regex-pattern="/^[a-zA-Z ]*$/"
           :max-length="30"
           v-model="user.name"
         />
